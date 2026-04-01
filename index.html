@@ -256,7 +256,7 @@
       <h2 class="section-title">Let's<br/>Build<br/>Together</h2>
       <p>Have a project idea, collaboration proposal, or just want to say hello? I'm always open to interesting conversations and opportunities.</p>
       <div class="contact-info">
-        <a class="contact-item" href="mailto:adityarajdwivedi@gmail.com">
+        <a class="contact-item" href="mailto:adityarajdwivedi468@gmail.com">
           <span>
             <div class="contact-item-label">Email</div>
             adityarajdwivedi468@gmail.com
@@ -270,31 +270,32 @@
         </a>
       </div>
     </div>
-
+ 
+    <!-- ✅ FIX: Proper <form> tag with id, and all inputs have id attributes -->
     <div class="reveal">
-      <div class="contact-form" id="contact-form">
+      <form class="contact-form" id="contact-form">
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">Name</label>
-            <input class="form-input" type="text" placeholder="Your name"/>
+            <label class="form-label" for="name">Name</label>
+            <input class="form-input" id="name" type="text" placeholder="Your name" required/>
           </div>
           <div class="form-group">
-            <label class="form-label">Email</label>
-            <input class="form-input" type="email" placeholder="your@email.com"/>
+            <label class="form-label" for="email">Email</label>
+            <input class="form-input" id="email" type="email" placeholder="your@email.com" required/>
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">Subject</label>
-          <input class="form-input" type="text" placeholder="What's this about?"/>
+          <label class="form-label" for="subject">Subject</label>
+          <input class="form-input" id="subject" type="text" placeholder="What's this about?" required/>
         </div>
         <div class="form-group">
-          <label class="form-label">Message</label>
-          <textarea class="form-textarea" placeholder="Tell me about your project or idea..."></textarea>
+          <label class="form-label" for="message">Message</label>
+          <textarea class="form-textarea" id="message" placeholder="Tell me about your project or idea..." required></textarea>
         </div>
-         <button type="submit" class="btn btn-primary" style="align-self:flex-start; border:none;">
-      Send Message →
-    </button>
-      </div>
+        <button type="submit" class="btn btn-primary" style="align-self:flex-start; border:none;">
+          Send Message →
+        </button>
+      </form>
     </div>
   </div>
 </section>
