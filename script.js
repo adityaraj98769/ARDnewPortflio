@@ -38,46 +38,75 @@
   }, { threshold: 0.12 });
   reveals.forEach(el => obs.observe(el));
 
-  // Initialize EmailJS
+ // EmailJS init
+emailjs.init("0KpnCeTqIKol1X-rD");
 
-(function () {
-  emailjs.init("0KpnCeTqIKol1X-rD"); // 🔁 Replace with your Public Key
-})();
+// Contact form handler
+const contactForm = document.getElementById("contact-form");
 
-// Form submit handler
-document.getElementById("contact-form").addEventListener("submit", function (e) {
-  e.preventDefault();
+if (contactForm) {
+  contactForm.addEventListener("submit", function (e) {
+    e.preventDefault();
 
-  // 🔹 Get form values
-  const params = {
-    name: document.getElementById("name").value.trim(),
-    email: document.getElementById("email").value.trim(),
-    subject: document.getElementById("subject").value.trim(),
-    message: document.getElementById("message").value.trim(),
-    time: new Date().toLocaleString() // for {{time}}
-  };
+    const params = {
+      name:    document.getElementById("name").value.trim(),
+      email:   document.getElementById("email").value.trim(),
+      subject: document.getElementById("subject").value.trim(),
+      message: document.getElementById("message").value.trim(),
+      time:    new Date().toLocaleString()
+    };
 
-  // 🔹 Button reference (for UX)
-  const btn = this.querySelector("button");
-  const originalText = btn.innerText;
+    const btn = contactForm.querySelector("button[type='submit']");
+    const originalText = btn.innerText;
 
-  // 🔄 Loading state
-  btn.innerText = "Sending...";
-  btn.disabled = true;
+    btn.innerText = "Sending...";
+    btn.disabled = true;
 
-  // 📩 Send email
-  emailjs.send("service_im4c2ls", "template_862ep26", params)
-    .then(() => {
-      alert("✅ Message sent successfully!");
-      document.getElementById("contact-form").reset();
-    })
-    .catch((error) => {
-      console.error("EmailJS Error:", error);
-      alert("❌ Failed to send message. Try again.");
-    })
-    .finally(() => {
-      // 🔁 Reset button
-      btn.innerText = originalText;
-      btn.disabled = false;
-    });
-});
+    emailjs.send("service_im4c2ls", "template_862ep26", params)
+      .then(() => {
+        showToast("✅ Message sent successfully!");
+        contactForm.reset();
+      })
+      .catch((error) => {
+        console.error("EmailJS Error:", error);
+        showToast("❌ Failed to send. Please try again.", true);
+      })
+      .finally(() => {
+        btn.innerText = originalText;
+        btn.disabled = false;
+      });
+  });
+}
+
+// Toast notification (replaces ugly browser alert)
+function showToast(message, isError = false) {
+  const existing = document.getElementById("toast");
+  if (existing) existing.remove();
+
+  const toast = document.createElement("div");
+  toast.id = "toast";
+  toast.innerText = message;
+  toast.style.cssText = `
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: ${isError ? "#ff4444" : "#FFD200"};
+    color: ${isError ? "#fff" : "#000"};
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .82rem;
+    font-weight: 600;
+    letter-spacing: .05em;
+    padding: 1rem 1.8rem;
+    z-index: 9999;
+    border: 1px solid ${isError ? "#cc0000" : "#c9a700"};
+    animation: fadeUp .3s ease forwards;
+    max-width: 340px;
+  `;
+  document.body.appendChild(toast);
+
+  setTimeout(() => {
+    toast.style.opacity = "0";
+    toast.style.transition = "opacity .4s";
+    setTimeout(() => toast.remove(), 400);
+  }, 4000);
+}
