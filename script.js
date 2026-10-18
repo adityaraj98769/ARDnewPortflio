@@ -9,7 +9,7 @@
     ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
     requestAnimationFrame(animCursor);
   })();
-  document.querySelectorAll('a, button, .skill-tag, .project-card, .stat-box').forEach(el => {
+  document.querySelectorAll('a, button, .skill-tag, .project-card, .stat-box, .feature-pill-card, .flagship-card, .appreciation-card, .appreciation-img-wrap, .lightbox-close').forEach(el => {
     el.addEventListener('mouseenter', () => {
       cursor.style.width = '20px'; cursor.style.height = '20px';
       ring.style.width = '50px'; ring.style.height = '50px';
@@ -109,4 +109,38 @@ function showToast(message, isError = false) {
     toast.style.transition = "opacity .4s";
     setTimeout(() => toast.remove(), 400);
   }, 4000);
+}
+
+// Lightbox controller for Appreciation Photos
+const lightboxModal = document.getElementById("lightboxModal");
+const lightboxImg = document.getElementById("lightboxImg");
+const lightboxCaption = document.getElementById("lightboxCaption");
+const lightboxClose = document.getElementById("lightboxClose");
+
+if (lightboxModal && lightboxImg) {
+  document.querySelectorAll(".appreciation-img-wrap").forEach(wrap => {
+    wrap.addEventListener("click", () => {
+      const imgSrc = wrap.getAttribute("data-img");
+      const caption = wrap.getAttribute("data-caption");
+      lightboxImg.src = imgSrc;
+      lightboxCaption.innerText = caption || "";
+      lightboxModal.classList.add("active");
+      lightboxModal.setAttribute("aria-hidden", "false");
+    });
+  });
+
+  const closeLightbox = () => {
+    lightboxModal.classList.remove("active");
+    lightboxModal.setAttribute("aria-hidden", "true");
+  };
+
+  if (lightboxClose) lightboxClose.addEventListener("click", closeLightbox);
+  lightboxModal.addEventListener("click", e => {
+    if (e.target === lightboxModal) closeLightbox();
+  });
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && lightboxModal.classList.contains("active")) {
+      closeLightbox();
+    }
+  });
 }
