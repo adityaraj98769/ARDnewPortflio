@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    color-scheme: light;
+  }
+
+  body {
+    @apply bg-sage-bg text-sage-text font-sans antialiased selection:bg-sage-highlight selection:text-sage-text;
+  }
+
+  /* Accessible focus rings */
+  :focus-visible {
+    @apply outline-none ring-2 ring-sage-primary/40 ring-offset-2 ring-offset-sage-bg;
+  }
+}
+
+@layer components {
+  /* Buttons */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 font-sans text-sm font-semibold text-white bg-sage-primary hover:bg-sage-hover transition-colors duration-200 rounded-lg shadow-subtle focus:outline-none focus:ring-2 focus:ring-sage-primary/40 focus:ring-offset-2;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 font-sans text-sm font-semibold text-sage-text bg-white hover:bg-sage-surface border border-sage-border hover:border-sage-primary/40 transition-all duration-200 rounded-lg shadow-subtle focus:outline-none focus:ring-2 focus:ring-sage-primary/40 focus:ring-offset-2;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-1.5 font-sans text-sm font-semibold text-sage-primary hover:text-sage-hover transition-colors;
+  }
+
+  /* Layout Containers */
+  .section-container {
+    @apply max-w-content mx-auto px-5 sm:px-8 lg:px-12 py-20 sm:py-24 lg:py-28;
+  }
+
+  /* Typography Styles */
+  .section-eyebrow {
+    @apply font-mono text-[11px] sm:text-xs uppercase tracking-[0.16em] text-sage-primary font-semibold mb-3 flex items-center gap-2;
+  }
+
+  .section-heading {
+    @apply font-display text-3xl sm:text-4xl lg:text-[42px] font-bold tracking-tight text-sage-text leading-[1.1] mb-6;
+  }
+
+  .section-lead {
+    @apply font-sans text-base sm:text-lg text-sage-muted leading-relaxed max-w-2xl;
+  }
+
+  /* Cards */
+  .card-editorial {
+    @apply bg-sage-card border border-sage-border rounded-card transition-all duration-200 hover:border-sage-primary/40 hover:shadow-card-hover;
+  }
+
+  /* Technical tag pills */
+  .tech-tag {
+    @apply px-2.5 py-1 font-mono text-xs font-medium text-sage-muted bg-sage-surface border border-sage-border/80 rounded-md;
+  }
+}
+
+/* Subtle motion control for users with preference */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
